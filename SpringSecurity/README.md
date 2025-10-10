@@ -1,102 +1,79 @@
-#  Retail Project (Microservices + Kafka)
+# Spring Security Examples
 
-This project is a **Retail Management System** built using **Spring Boot microservices architecture**.  
-It consists of two main services — `InventoryService` and `OrderService` — that communicate asynchronously through **Apache Kafka**.
+This directory contains examples and configurations for securing a Spring Boot application using Spring Security.
 
----
+## Overview
 
-## 📁 Project Structure
+Spring Security is a powerful and customizable authentication and access-control framework for Java applications, especially Spring-based projects. The examples here demonstrate how to implement various security mechanisms in a Spring Boot application.
 
-```text
-RetailProject/
-│
-├── InventoryService331/          # Manages product inventory
-│   ├── src/main/java/com/order/
-│   │   ├── InventoryService331Application.java  # Main Spring Boot app
-│   │   └── controller/
-│   │       └── InventoryController.java        # Handles REST APIs
-│   ├── src/main/resources/application.properties  # Config file
-│   └── pom.xml                                 # Maven dependencies
-│
-├── OrderService33/              # Handles customer orders
-│   ├── src/main/java/com/order/
-│   │   ├── OrderService33Application.java  # Main Spring Boot app
-│   │   └── controller/
-│   │       └── OrderController.java       # Handles REST APIs
-│   ├── src/main/resources/application.properties
-│   └── pom.xml
-│
-└── pom.xml (Parent POM)          # Parent Maven configuration
+## Features Demonstrated
+
+- **Authentication:**  
+  How to secure endpoints using in-memory, JDBC, or custom user details service.
+
+- **Authorization:**  
+  Role-based access control for REST APIs or web endpoints.
+
+- **Password Encoding:**  
+  Using password encoders to securely store and validate user credentials.
+
+- **JWT:**  
+  Examples of securing APIs using JSON Web Tokens.
+
+## Folder Structure
 
 ```
----
-
-## Tech Stack
-
-| Component       | Technology         |
-| --------------- | ------------------ |
-| Language        | Java 17            |
-| Framework       | Spring Boot        |
-| Build Tool      | Maven              |
-| Messaging       | Apache Kafka       |
-| Architecture    | Microservices      |
-| IDE             | IntelliJ / Eclipse |
-| Version Control | Git & GitHub       |
-
----
-## Microservices Overview
-1️. Inventory Service
-
-Manages product stock details.
-Publishes updates to Kafka topics when stock changes occur.
-Listens to Kafka events to synchronize product data.
-
-2️.Order Service
-
-Handles customer orders and order processing.
-Sends order requests via Kafka.
-Listens for inventory updates to confirm product availability.
-
----
-
-## Kafka Integration Flow
-
-Order Service sends a message to a Kafka topic (e.g., order-topic) when a new order is created.
-
-Inventory Service consumes the message, checks stock availability, and responds through another topic (e.g., inventory-topic).
-
----
+spring_security/
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── [com.example.demo]/SpringSecurityApplication.java
+│                                  ├──config/SecurityConfig.java
+│                                  ├──controller/authcontroller.java
+│                                               /UserController.java 
+│                                  ├──entity/Role.java
+│                                           /User.java 
+│                                  ├──repository/UserRepository.java
+│                                  ├──service/CustomeUserDetails.java
+│                                  ├──utils/JwtFilter.java
+│                                          /JwtService.java
+│                                          /LoggingFilter.java    
+│       └── resources/
+│           └── application.properties
+├── README.md
+```
 
 ## Getting Started
-1️⃣ Clone the Repository
-git clone https://github.com/Abhishek-Kanade-23/Kafka-Project.git
-cd Kafka-Project
 
-2️⃣ Start  Kafka
-# Start Kafka Server
-```bash
-kafka-server-start.bat config/server.properties
-```
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/OmkarRMundhe/Daily_Assignment.git
+   cd Daily_Assignment/spring_security
+   ```
 
-3️⃣ Create Required Kafka Topics
-```bash
-kafka-topics.bat --create --topic order-topic --bootstrap-server localhost:9092
-kafka-topics.bat --create --topic inventory-topic --bootstrap-server localhost:9092
-```
+2. **Configure Properties:**
+   Update `application.properties` for your database, security settings, and other configurations as needed.
 
-4️⃣ Run Microservices
+3. **Run the Application:**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+   or
+   ```bash
+   ./gradlew bootRun
+   ```
 
-Open two terminals:
+4. **Access the Endpoints:**
+   Test the secured endpoints using Postman, curl, or your browser.
 
-# Terminal 1
-```bash
-cd InventoryService331
-mvn spring-boot:run
-```
+## Example Endpoints
 
-# Terminal 2
-```bash
-cd OrderService33
-mvn spring-boot:run
-```
+- `/login` - Form-based authentication
+- `/api/secure` - Endpoint protected by roles
+- `/logout` - Logout functionality
+
+## Customization
+
+- Modify security configurations in `SecurityConfig.java` for custom requirements.
+- Add or modify roles and users as per your needs.
 
